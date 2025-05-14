@@ -182,9 +182,42 @@ function showFocusModal() {
             submitFocus();
         }
     });
+    
+    // Handle Escape key press to cancel
+    document.addEventListener('keydown', handleEscapeKey);
+    
+    // Handle click outside modal to cancel
+    focusModal.addEventListener('click', handleOutsideClick);
+}
+
+function handleEscapeKey(e) {
+    if (e.key === 'Escape') {
+        cancelFocusModal();
+    }
+}
+
+function handleOutsideClick(e) {
+    // If the click is on the modal background (not the content)
+    if (e.target === focusModal) {
+        cancelFocusModal();
+    }
+}
+
+function cancelFocusModal() {
+    // Clean up event listeners
+    document.removeEventListener('keydown', handleEscapeKey);
+    focusModal.removeEventListener('click', handleOutsideClick);
+    
+    // Hide modal
+    focusModal.style.display = 'none';
+    focusInput.value = '';
 }
 
 function submitFocus() {
+    // Clean up event listeners
+    document.removeEventListener('keydown', handleEscapeKey);
+    focusModal.removeEventListener('click', handleOutsideClick);
+    
     currentFocusText = focusInput.value.trim();
     
     if (currentFocusText) {
