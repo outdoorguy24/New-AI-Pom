@@ -41,8 +41,19 @@
                 <i class="fas fa-coffee"></i> Rest Mode
             </button>
         </div>
+        
+        <div id="current-focus-container" class="hidden">
+            <p id="current-focus"></p>
+        </div>
     </div>
     <div class="firework-container" id="firework-container"></div>
+    <div class="modal" id="focus-modal">
+        <div class="modal-content">
+            <h2>What are you focusing on?</h2>
+            <input type="text" id="focus-input" placeholder="Enter your focus for this session...">
+            <button id="focus-submit" class="primary-btn">Start Focusing</button>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html> 

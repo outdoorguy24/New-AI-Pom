@@ -19,6 +19,14 @@ const circumference = 2 * Math.PI * radius;
 progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
 progressRing.style.strokeDashoffset = '0';
 
+// Add these variables at the top with the other declarations
+const focusModal = document.getElementById('focus-modal');
+const focusInput = document.getElementById('focus-input');
+const focusSubmit = document.getElementById('focus-submit');
+const currentFocusContainer = document.getElementById('current-focus-container');
+const currentFocus = document.getElementById('current-focus');
+let currentFocusText = '';
+
 function updateDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
@@ -60,7 +68,19 @@ function toggleStartPause() {
     if (isRunning) {
         pauseTimer();
     } else {
-        startTimer();
+        // If timer is not running and we're about to start
+        if (timeLeft === totalTime) {
+            // Only show focus modal in work mode
+            if (isWorkTime) {
+                showFocusModal();
+            } else {
+                // In rest mode, just start the timer directly
+                startTimer();
+            }
+        } else {
+            // If we're just resuming after a pause, start the timer directly
+            startTimer();
+        }
     }
 }
 
@@ -152,9 +172,37 @@ function createFireworkBurst(container) {
     }
 }
 
+function showFocusModal() {
+    focusModal.style.display = 'flex';
+    focusInput.focus();
+    
+    // Handle Enter key press
+    focusInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            submitFocus();
+        }
+    });
+}
+
+function submitFocus() {
+    currentFocusText = focusInput.value.trim();
+    
+    if (currentFocusText) {
+        currentFocus.textContent = `Focusing on: ${currentFocusText}`;
+        currentFocusContainer.classList.remove('hidden');
+    } else {
+        currentFocusContainer.classList.add('hidden');
+    }
+    
+    focusModal.style.display = 'none';
+    focusInput.value = '';
+    startTimer();
+}
+
 function resetTimer() {
     // Only show fireworks if timer was running and we're resetting after completion
-    const showCelebration = isRunning || timeLeft < totalTime;
+    // AND we're in work mode
+    const showCelebration = (isRunning || timeLeft < totalTime) && isWorkTime;
     
     pauseTimer();
     timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
@@ -162,7 +210,10 @@ function resetTimer() {
     updateDisplay();
     startPauseButton.innerHTML = '<i class="fas fa-play"></i> Start';
     
-    // Show fireworks if we were in the middle of a session
+    // Hide the current focus
+    currentFocusContainer.classList.add('hidden');
+    
+    // Show fireworks if we were in the middle of a session and in work mode
     if (showCelebration) {
         createFireworks();
     }
@@ -171,6 +222,9 @@ function resetTimer() {
 startPauseButton.addEventListener('click', toggleStartPause);
 resetButton.addEventListener('click', resetTimer);
 modeToggleButton.addEventListener('click', toggleMode);
+
+// Add event listener for the focus submit button
+focusSubmit.addEventListener('click', submitFocus);
 
 // Initialize display and button state
 updateDisplay();
