@@ -3,8 +3,6 @@ let timerId = null;
 let isWorkTime = true;
 let isRunning = false;
 let totalTime = 25 * 60; // Total time for the current mode
-let sessionsCompleted = 0;
-let totalMinutesWorked = 0;
 
 const minutesDisplay = document.getElementById('minutes');
 const secondsDisplay = document.getElementById('seconds');
@@ -80,13 +78,6 @@ function startTimer() {
             timerId = null;
             isRunning = false;
             
-            // Update stats
-            if (isWorkTime) {
-                sessionsCompleted++;
-                totalMinutesWorked += Math.floor(totalTime / 60);
-                updateStats();
-            }
-            
             // Switch modes automatically when timer ends
             isWorkTime = !isWorkTime;
             timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
@@ -119,17 +110,10 @@ function resetTimer() {
     startPauseButton.innerHTML = '<i class="fas fa-play"></i> Start';
 }
 
-function updateStats() {
-    const statValues = document.querySelectorAll('.stat-value');
-    statValues[0].textContent = sessionsCompleted;
-    statValues[1].textContent = totalMinutesWorked;
-}
-
 startPauseButton.addEventListener('click', toggleStartPause);
 resetButton.addEventListener('click', resetTimer);
 modeToggleButton.addEventListener('click', toggleMode);
 
 // Initialize display and button state
 updateDisplay();
-updateModeButton();
-updateStats(); 
+updateModeButton(); 

@@ -201,39 +201,6 @@ button {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.stats-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 2rem;
-}
-
-.stat-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    background-color: var(--light-bg);
-    border-radius: 15px;
-    width: 45%;
-}
-
-.stat-card i {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.stat-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--text-color);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: var(--light-text);
-}
-
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
@@ -262,10 +229,6 @@ body.rest-mode .mode-btn {
 body.rest-mode .primary-btn:hover,
 body.rest-mode .mode-btn:hover {
     background-color: var(--secondary-dark);
-}
-
-body.rest-mode .stat-card i {
-    color: var(--secondary-color);
 }
 
 /* Responsive design */
