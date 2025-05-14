@@ -32,11 +32,11 @@ body {
 
 .app-container {
     width: 90%;
-    max-width: 500px;
+    max-width: 450px;
     background-color: var(--white);
     border-radius: 20px;
     box-shadow: var(--card-shadow);
-    padding: 2rem;
+    padding: 2rem 1.5rem;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -182,12 +182,14 @@ button {
 .secondary-btn {
     background-color: var(--light-bg);
     color: var(--text-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
 }
 
 .secondary-btn:hover {
     background-color: #e9ecef;
     transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .mode-btn {
@@ -234,8 +236,8 @@ body.rest-mode .mode-btn:hover {
 /* Responsive design */
 @media (max-width: 600px) {
     .app-container {
-        width: 95%;
-        padding: 1.5rem;
+        width: 82%;
+        padding: 1.5rem 1rem;
     }
     
     h1 {
@@ -254,6 +256,23 @@ body.rest-mode .mode-btn:hover {
     button {
         width: 100%;
         max-width: 200px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 350px) {
+    .app-container {
+        width: 95%;
+        padding: 1.2rem 0.8rem;
+    }
+    
+    .timer-card {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .timer-display {
+        font-size: 2.8rem;
     }
 }
 
