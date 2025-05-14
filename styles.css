@@ -256,3 +256,12 @@ body.rest-mode .mode-btn:hover {
         max-width: 200px;
     }
 }
+
+.quote-font {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-weight: 400;
+    /* You can adjust these as needed */
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+}
