@@ -102,12 +102,70 @@ function pauseTimer() {
     startPauseButton.innerHTML = '<i class="fas fa-play"></i> Start';
 }
 
+function createFireworks() {
+    const container = document.getElementById('firework-container');
+    container.style.display = 'block';
+    container.innerHTML = '';
+    
+    // Create more fireworks
+    for (let i = 0; i < 8; i++) {  // Increased from 5 to 8
+        setTimeout(() => {
+            createFireworkBurst(container);
+        }, i * 300);
+    }
+    
+    // Hide container after animation completes
+    setTimeout(() => {
+        container.style.display = 'none';
+    }, 4000);  // Increased from 3000 to 4000 to accommodate more fireworks
+}
+
+function createFireworkBurst(container) {
+    // Create a burst point
+    const burstX = Math.random() * window.innerWidth;
+    const burstY = Math.random() * window.innerHeight * 0.6;  // Increased from 0.5 to 0.6
+    
+    // Create particles for this burst
+    for (let i = 0; i < 40; i++) {  // Increased from 30 to 40
+        const particle = document.createElement('div');
+        particle.className = 'firework';
+        
+        // Random color with higher saturation and brightness
+        const hue = Math.floor(Math.random() * 360);
+        particle.style.backgroundColor = `hsl(${hue}, 100%, 65%)`;  // Increased brightness from 60% to 65%
+        particle.style.boxShadow = `0 0 15px 5px hsl(${hue}, 100%, 65%)`;  // Increased glow
+        
+        // Random direction with greater distance
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 150 + 80;  // Increased from 100+50 to 150+80
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--x', `${x}px`);
+        particle.style.setProperty('--y', `${y}px`);
+        
+        // Position at burst point
+        particle.style.left = `${burstX}px`;
+        particle.style.top = `${burstY}px`;
+        
+        container.appendChild(particle);
+    }
+}
+
 function resetTimer() {
+    // Only show fireworks if timer was running and we're resetting after completion
+    const showCelebration = isRunning || timeLeft < totalTime;
+    
     pauseTimer();
     timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
     totalTime = timeLeft;
     updateDisplay();
     startPauseButton.innerHTML = '<i class="fas fa-play"></i> Start';
+    
+    // Show fireworks if we were in the middle of a session
+    if (showCelebration) {
+        createFireworks();
+    }
 }
 
 startPauseButton.addEventListener('click', toggleStartPause);
